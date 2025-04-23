@@ -1,0 +1,57 @@
+# alternative of application.properties with:
+#spring.application.name=accounts
+#server.port=8080
+#spring.datasource.url=jdbc:h2:mem:testdb
+#spring.datasource.driver-class-name=org.h2.Driver
+#spring.datasource.username=sa
+#spring.datasource.password=
+#spring.h2.console.enabled=true
+#spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+#spring.jpa.hibernate.ddl-auto=update
+#spring.jpa.show-sql=true
+
+
+server:
+  port: 8080
+spring:
+  datasource:
+    # tells Spring Boot to use an H2 in-memory database named `testdb`
+    # in-memory databases are ideal for testing or prototyping as they reside only in memory and are not persisted to disk
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ''
+  h2:
+    console:
+      # this enables the H2 web console
+      # once enabled, you can access the H2 database management interface (usually at /h2-console endpoint) in your browser
+      enabled: true
+  jpa:
+    # specifies the dialect that Hibernate should use
+    # the H2Dialect is tailored to the H2 database, ensuring that Hibernate generates SQL optimized for H2
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      # this property controls the behavior of schema generation
+      # with the value `update` Hibernate will automatically adjust the database schema to match your entity definitions
+      ddl-auto: update
+    # when set to `true`, this property instructs Hibernate to log the SQL statements it generates
+    show-sql: true
+  config:
+    import:
+      - "application_qa.yml"
+      - "application_prod.yml"
+  profiles:
+    active:
+      - "qa"
+
+build:
+  version: "3.0"
+
+accounts:
+  message: "Welcome to EasyBank accounts related local APIs"
+  contactDetails:
+    name: "Garik - Developer"
+    email: "garik.developer@gmail.com"
+  onCallSupport:
+    - (555) 555-1234
+    - (555) 555-2345

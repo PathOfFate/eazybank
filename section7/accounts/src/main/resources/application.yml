@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: "accounts"
+  profiles:
+    active: "prod"
+  datasource:
+    url: "jdbc:mysql://localhost:3306/accounts_db"
+    username: root
+    password: root
+  jpa:
+    # when set to `true`, this property instructs Hibernate to log the SQL statements it generates
+    show-sql: true
+  sql:
+    init:
+      mode: always
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

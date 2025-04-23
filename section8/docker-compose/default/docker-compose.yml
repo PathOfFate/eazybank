@@ -1,0 +1,111 @@
+services:
+  configserver:
+    image: "pushnofear/configserver:s8"
+    container_name: configserver-ms
+    ports:
+      - "8071:8071"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8071/actuator/health/readiness"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
+  eurekaserver:
+    image: "pushnofear/eurekaserver:s8"
+    container_name: eurekaserver-ms
+    ports:
+      - "8070:8070"
+    volumes:
+      - "../dockerize:/usr/local/bin/dockerize:ro"
+    entrypoint:
+      - /usr/local/bin/dockerize
+      - -wait
+      - http://configserver:8071/actuator/health/readiness
+      - -timeout
+      - 60s
+      - /cnb/process/web
+    environment:
+      SPRING_APPLICATION_NAME: "eurekaserver"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8070/actuator/health/readiness"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
+  accounts:
+    image: "pushnofear/accounts:s8"
+    container_name: accounts-ms
+    ports:
+      - "8080:8080"
+    volumes:
+      - "../dockerize:/usr/local/bin/dockerize:ro"
+    entrypoint:
+      - /usr/local/bin/dockerize
+      - -wait
+      - http://configserver:8071/actuator/health/readiness
+      - -wait
+      - http://eurekaserver:8070/actuator/health/readiness
+      - -timeout
+      - 90s
+      - /cnb/process/web
+    environment:
+      SPRING_APPLICATION_NAME: "accounts"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+  loans:
+    image: "pushnofear/loans:s8"
+    container_name: loans-ms
+    ports:
+      - "8090:8090"
+    volumes:
+      - "../dockerize:/usr/local/bin/dockerize:ro"
+    entrypoint:
+      - /usr/local/bin/dockerize
+      - -wait
+      - http://configserver:8071/actuator/health/readiness
+      - -wait
+      - http://eurekaserver:8070/actuator/health/readiness
+      - -timeout
+      - 90s
+      - /cnb/process/web
+    environment:
+      SPRING_APPLICATION_NAME: "loans"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+  cards:
+    image: "pushnofear/cards:s8"
+    container_name: cards-ms
+    ports:
+      - "9000:9000"
+    volumes:
+      - "../dockerize:/usr/local/bin/dockerize:ro"
+    entrypoint:
+      - /usr/local/bin/dockerize
+      - -wait
+      - http://configserver:8071/actuator/health/readiness
+      - -wait
+      - http://eurekaserver:8070/actuator/health/readiness
+      - -timeout
+      - 90s
+      - /cnb/process/web
+    environment:
+      SPRING_APPLICATION_NAME: "cards"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+networks:
+  eazybank:
+    driver: "bridge"

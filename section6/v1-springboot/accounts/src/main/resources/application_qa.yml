@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "2.0"
+
+accounts:
+  message: "Welcome to EasyBank accounts related QA APIs"
+  contactDetails:
+    name: "Mark - QA Lead"
+    email: "mark.qa@gmail.com"
+  onCallSupport:
+    - (666) 555-1234
+    - (666) 555-2345
