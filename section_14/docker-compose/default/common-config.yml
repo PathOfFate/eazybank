@@ -17,6 +17,7 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4318
       OTEL_METRICS_EXPORTER: none
       OTEL_LOGS_EXPORTER: none
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
 
   microservice-configserver-config:
     extends:
