@@ -1,0 +1,11 @@
+global:
+  configMapName: eazybank-prod-configmap
+  activeProfile: prod
+  configServerURL: configserver:http://configserver:8071/
+  eurekaServerURL: http://eurekaserver:8070/eureka/
+  keyCloakURL: http://keycloak.default.svc.cluster.local:80/realms/master/protocol/openid-connect/certs
+  openTelemetryJavaAgent: "-Dotel.javaagent.enabled=false"
+  otelExporterEndPoint: http://tempo-grafana-tempo-distributor:4318
+  otelMetricsExporter: none
+  otelLogsExporter: none
+  kafkaBrokerURL: kafka-controller-0.kafka-controller-headless.default.svc.cluster.local:9092

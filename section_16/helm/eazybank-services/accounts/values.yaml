@@ -1,0 +1,28 @@
+# this is a YAML-formatted file
+# declare variables to be passed into your templates
+
+deploymentName: accounts-deployment
+serviceName: accounts
+appLabel: accounts
+appName: accounts
+
+replicaCount: 1
+
+image:
+  repository: pushnofear/accounts
+  tag: s14
+
+containerPort: 8080
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+app_name_enabled: true
+profile_enabled: true
+config_enabled: true
+eureka_enabled: true
+resource_server_enabled: false
+otel_enabled: true
+kafka_enabled: true
