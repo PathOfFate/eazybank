@@ -1,0 +1,28 @@
+# this is a YAML-formatted file
+# declare variables to be passed into your templates
+
+deploymentName: loans-deployment
+serviceName: loans
+appLabel: loans
+appName: loans
+
+replicaCount: 1
+
+image:
+  repository: pushnofear/loans
+  tag: s17
+
+containerPort: 8090
+
+service:
+  type: ClusterIP
+  port: 8090
+  targetPort: 8090
+
+app_name_enabled: true
+profile_enabled: true
+config_enabled: true
+discovery_enabled: true
+resource_server_enabled: false
+otel_enabled: true
+kafka_enabled: false

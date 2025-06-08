@@ -1,0 +1,11 @@
+build:
+  version: "3.0"
+
+accounts:
+  message: "Welcome to EasyBank accounts related local APIs"
+  contactDetails:
+    name: "Garik - Developer"
+    email: "garik.developer@gmail.com"
+  onCallSupport:
+    - (555) 555-1234
+    - (555) 555-2345
